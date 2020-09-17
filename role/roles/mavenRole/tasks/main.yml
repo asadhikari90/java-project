@@ -1,0 +1,7 @@
+---
+# tasks file for mavenRole
+
+- name: Install maven
+  apt:
+   name: maven
+   state: present

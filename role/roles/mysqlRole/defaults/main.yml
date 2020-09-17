@@ -1,0 +1,3 @@
+mysql_password: password
+host: 127.0.0.1
+demo_password: demo

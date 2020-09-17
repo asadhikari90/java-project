@@ -1,0 +1,5 @@
+---
+  dependencies: 
+   - { role: javaRole }
+   - { role: mavenRole }
+  

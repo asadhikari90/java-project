@@ -1,0 +1,4 @@
+---
+# vars file for nginxRole
+Tomcat_ip: "{{ hostvars[groups['tag_Name_TOMCAT'][0]].ansible_all_ipv4_addresses | default(hostvars[groups['tag_Name_TOMCAT'][0]]['ansible_default_ipv4']['address']) }}"
+

@@ -1,0 +1,22 @@
+---
+# tasks file for nginxRole
+- name: Install nginx
+  apt:
+    name: nginx
+    state: present
+  when: inventory_hostname in groups['tag_Name_NGINX']
+  
+- name: public ip
+  command: wget -qO- ifconfig.me
+  register: public_ip
+  when: inventory_hostname in groups['tag_Name_NGINX']
+  
+- name: configuration file of nginx
+  template:
+    src: default.j2
+    dest: /etc/nginx/conf.d/tomcat.conf 
+  when: inventory_hostname in groups['tag_Name_NGINX']   
+  
+  notify: Start_NGINX
+  notify: Reload_NGINX
+

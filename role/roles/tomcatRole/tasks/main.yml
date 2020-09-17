@@ -1,0 +1,45 @@
+---
+# tasks file for tomcatRole
+- name: CREATE TOMCAT GROUP
+  group:
+   name: tomcat    
+
+- name: CREATE TOMCAT USER
+  user:
+   name: tomcat
+   group: tomcat
+   home: "{{ tomcat_directory }}"
+   shell: /bin/false    
+
+- name: CREATE DIRECTORY FOR TOMCAT
+  file:
+   path: "{{ tomcat_directory }}"
+   state: directory
+   mode: 0755    
+
+- name: INSTALLING TOMCAT
+  unarchive:
+   src: "{{ download_tomcat }}"
+   dest: "{{ tomcat_directory }}"
+   remote_src: yes
+   extra_opts: [--strip-components=1]    
+
+- name: CHANGE OWNERSHIP
+  file:
+   path: "{{ tomcat_directory }}"
+   owner: tomcat
+   group: tomcat
+   mode: "u+rwx,g+rx,o=rx"
+   recurse: yes
+   state: directory    
+
+- name: PUSH TOMCAT SERVICE FILE
+  copy:
+   src: tomcat.service
+   dest: /etc/systemd/system/    
+
+  notify:
+   - tomcat restart
+
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers

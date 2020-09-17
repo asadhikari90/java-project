@@ -1,0 +1,3 @@
+# vars file for tomcatRole
+tomcat_directory: /opt/tomcat
+download_tomcat:  http://apachemirror.wuchna.com/tomcat/tomcat-8/v8.5.57/bin/apache-tomcat-8.5.57.tar.gz

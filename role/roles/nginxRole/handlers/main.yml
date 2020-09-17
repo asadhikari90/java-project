@@ -1,0 +1,11 @@
+# handlers file for nginxRole
+- name: Start_NGINX
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+    
+- name: Reload_NGINX
+  service:
+    name: nginx
+    state: reloaded

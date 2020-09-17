@@ -1,0 +1,50 @@
+#!groovy
+
+properties([
+    buildDiscarder(logRotator(numToKeepStr: '20')),
+    parameters([
+        booleanParam(name: 'tomcat', defaultValue: true, description: 'Tick a checkbox'),
+        booleanParam(name: 'nginx', defaultValue: true, description: 'Tick a checkbox'),
+        booleanParam(name: 'mysql', defaultValue: true, description: 'Tick a checkbox'),
+    ])
+])
+
+node {
+
+    stage('Preparation') { 
+          git 'https://gitlab.com/Jai-k7/javaproject.git'
+   }
+
+    try {
+        if (params.nginx) {
+            stage('Stage 1') {
+               
+            sh '''  ansible-playbook -i role/ role/nginxPlay.yml -u ubuntu --ssh-common-args='-o StrictHostKeyChecking=no'
+            '''
+            }
+        }
+        
+         if (params.tomcat) {
+            stage('Stage 2') {
+                
+             sh ''' cd role/ ; ansible-playbook -i ec2.py tomcatPlay.yml -u ubuntu '''
+            }
+        }
+        
+         if (params.mysql) {
+            stage('Stage 3') {
+               
+               sh ''' cd role/; ansible-playbook -i ec2.py mysqlPlay.yml -u ubuntu '''
+            }
+        }
+       
+    }
+    catch (err) {
+        // catch an error and do something else
+        throw err
+    }
+    finally {
+        // Finish with final mandatory tasks regardless of success/failure
+        deleteDir()
+    }
+}

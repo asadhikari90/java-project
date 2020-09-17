@@ -1,0 +1,13 @@
+node {
+ 
+      stage("Checkout"){
+      git 'https://gitlab.com/Jai-k7/javaproject.git'
+   
+      }
+   
+   stage('Jenkins server Setup') {
+    
+    sh ''' ansible-playbook -i ec2.py role/jenkinsPlay.yml -u ubuntu 
+    '''
+   }
+}

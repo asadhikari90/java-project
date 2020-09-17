@@ -1,0 +1,27 @@
+pipelineJob('Configuration') {
+    definition {
+             cpsScm {
+                 scriptPath 'seed/Jenkinsfile'
+                 scm {
+                   git {
+                       remote { url 'https://gitlab.com/Jai-k7/javaproject.git' }
+                       branch '*/master'
+                       extensions {}
+                   }             }
+         }
+     }
+  }
+  
+pipelineJob('Deployment') {
+    definition {
+             cpsScm {
+                 scriptPath 'deployment/Jenkinsfile'
+                 scm {
+                   git {
+                       remote { url 'https://gitlab.com/Jai-k7/javaproject.git' }
+                       branch '*/master'
+                       extensions {}
+                   }             }
+         }
+     }
+  }

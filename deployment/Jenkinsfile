@@ -1,0 +1,16 @@
+node {
+   
+   stage('Preparation') { // for display purposes
+     
+      git 'https://gitlab.com/Jai-k7/javaproject.git'
+     
+   }
+   
+   stage('Deploy') {
+    
+    sh ''' cd role/; ansible-playbook -i ec2.py deployment.yml -u ubuntu '''     
+      
+   }
+
+    
+}

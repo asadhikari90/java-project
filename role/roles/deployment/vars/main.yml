@@ -1,0 +1,5 @@
+---
+# vars file for deploymento 
+  gitrepo: https://github.com/opstree/spring3hibernate
+  srcloc: /home/myrepo/target/Spring3HibernateApp.war
+  myurl: http://52.43.236.99/Spring3HibernateApp/ 

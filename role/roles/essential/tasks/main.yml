@@ -1,0 +1,49 @@
+---
+# Install Python and pip
+
+- name: Install Python
+  apt:
+    name: ['python', 'python-pip', 'python3-pip']
+    state: present
+    update_cache: yes
+ 
+
+# install pip packages
+
+- name: install pip package
+  pip:
+    name: ['ansible', 'boto', 'awscli', 'boto3']
+
+# update ssh private key at jenkins server
+- name: Create ssh directory if it does not exist
+  file:
+    path: /var/lib/jenkins/.ssh
+    state: directory
+    mode: '0755'
+
+- name: Copy key with owner and permissions
+  copy:
+    src: ~/.ssh/id_rsa
+    dest: /var/lib/jenkins/.ssh/id_rsa
+    owner: jenkins
+    group: jenkins
+    mode: '400'
+
+# configure aws
+
+- name: 'Create the AWS config directory'
+  file: 
+    path: /var/lib/jenkins/.aws
+    state: directory
+    owner: jenkins
+    group: jenkins
+    mode: 0755
+
+- name: 'Copy AWS CLI credentials'
+  template: 
+    src: credentials.j2
+    dest: /var/lib/jenkins/.aws/credentials
+    owner: jenkins
+    group: jenkins
+    mode: 0600
+    

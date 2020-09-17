@@ -1,0 +1,8 @@
+---
+- hosts: tag_Name_JENKINS 
+  become: yes
+  roles:
+   - javaRole
+   - role-jenkins
+   - essential
+

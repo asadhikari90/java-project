@@ -1,0 +1,6 @@
+---
+- hosts: betaal
+  become: yes
+  roles:
+   - nginxRole
+

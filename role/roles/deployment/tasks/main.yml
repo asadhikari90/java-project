@@ -1,0 +1,21 @@
+---
+# tasks file for deploymento
+
+- name: clone repo
+  git:
+    repo: "{{ gitrepo }}"
+    dest: /home/myrepo/
+
+- name: build project
+  shell: |
+   cd /home/myrepo/
+   mvn clean package
+
+- name: deploy artifact
+  copy: 
+   src: "{{ srcloc }}"
+   dest: /opt/tomcat/webapps/
+   remote_src: yes
+
+
+
